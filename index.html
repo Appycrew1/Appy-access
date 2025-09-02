@@ -1,36 +1,36 @@
-
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Pre‑Survey — Pro (Vercel Minimal)</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-  <style>
-    :root{ color-scheme: light dark; }
-    body{ margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; background:#f8fafc; color:#0b1220; }
-    header{ display:flex; gap:.75rem; align-items:center; padding:.75rem 1rem; border-bottom:1px solid #e5e7eb; background:rgba(255,255,255,.75); backdrop-filter: blur(8px); position:sticky; top:0; z-index:10 }
-    .chip{ font-size:.8rem; padding:.25rem .5rem; border:1px solid #e5e7eb; border-radius:999px; background:white }
-    .container{ display:grid; grid-template-columns: 1fr; }
-    #map{ height: 40vh; }
-    @media(min-width: 1200px){ .container{ grid-template-columns: 1fr 1fr; height: calc(100vh - 54px) } #map{ height: calc(100vh - 54px) } }
-    .panel{ border-left:1px solid #e5e7eb; background:white; overflow:auto }
-    .card{ border-bottom:1px solid #e5e7eb; padding:1rem }
-    .label{ font-size:.9rem; opacity:.8; margin-bottom:.25rem }
-    .input,.select{ padding:.5rem .75rem; border:1px solid #e5e7eb; border-radius:.5rem; width:100% }
-    .btn{ display:inline-flex; gap:.5rem; align-items:center; padding:.5rem .75rem; border:1px solid #e5e7eb; border-radius:.5rem; background:white; cursor:pointer }
-    .btn.primary{ background:#0ea5e9; color:white; border-color:#0ea5e9 }
-    .grid{ display:grid; gap:.75rem }
-    .kpis{ display:grid; gap:.5rem; grid-template-columns: repeat(4, minmax(0,1fr)); }
-    .kpi{ border:1px solid #e5e7eb; border-radius:.75rem; padding:.5rem .75rem; background:#fafafa }
-    .toggle-wrap{ display:flex; gap:.5rem; align-items:center; flex-wrap:wrap }
-    .pill{ font-size:.8rem; border:1px solid #e5e7eb; padding:.25rem .5rem; border-radius:999px; background:white }
-  </style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Access & Pre-Survey — Pro</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+  :root{ color-scheme: light dark; }
+  body{ margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; background:#f8fafc; color:#0b1220; }
+  header{ display:flex; gap:.75rem; align-items:center; padding:.75rem 1rem; border-bottom:1px solid #e5e7eb; background:rgba(255,255,255,.75); backdrop-filter: blur(8px); position:sticky; top:0; z-index:10 }
+  .chip{ font-size:.8rem; padding:.25rem .5rem; border:1px solid #e5e7eb; border-radius:999px; background:white }
+  .container{ display:grid; grid-template-columns: 1fr; }
+  #map{ height: 42vh; }
+  @media(min-width: 1200px){ .container{ grid-template-columns: 1fr 1fr; height: calc(100vh - 54px) } #map{ height: calc(100vh - 54px) } }
+  .panel{ border-left:1px solid #e5e7eb; background:white; overflow:auto }
+  .card{ border-bottom:1px solid #e5e7eb; padding:1rem }
+  .label{ font-size:.9rem; opacity:.8; margin-bottom:.25rem }
+  .input,.select{ padding:.5rem .75rem; border:1px solid #e5e7eb; border-radius:.5rem; width:100% }
+  .btn{ display:inline-flex; gap:.5rem; align-items:center; padding:.5rem .75rem; border:1px solid #e5e7eb; border-radius:.5rem; background:white; cursor:pointer }
+  .btn.primary{ background:#0ea5e9; color:white; border-color:#0ea5e9 }
+  .grid{ display:grid; gap:.75rem }
+  .kpis{ display:grid; gap:.5rem; grid-template-columns: repeat(4, minmax(0,1fr)); }
+  .kpi{ border:1px solid #e5e7eb; border-radius:.75rem; padding:.5rem .75rem; background:#fafafa }
+  .toggle-wrap{ display:flex; gap:.5rem; align-items:center; flex-wrap:wrap }
+  .pill{ font-size:.8rem; border:1px solid #e5e7eb; padding:.25rem .5rem; border-radius:999px; background:white }
+  .row{ display:flex; gap:.5rem; flex-wrap:wrap }
+</style>
 </head>
 <body>
 <header>
   <div style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:#e0f2fe;border-radius:.75rem;color:#0ea5e9">🚚</div>
-  <b>Pre‑Survey Pro (Framework‑free on Vercel)</b>
+  <b>Access & Pre-Survey (Vercel Minimal)</b>
   <span class="chip" id="env" style="margin-left:auto"></span>
 </header>
 
@@ -42,6 +42,7 @@
         <span class="label">Layers:</span>
         <label class="pill"><input type="checkbox" id="layer-heat" checked> Heat points</label>
         <label class="pill"><input type="checkbox" id="layer-chor" checked> Choropleth</label>
+        <label class="pill"><input type="checkbox" id="layer-inc" checked> Incidents</label>
       </div>
     </div>
   </div>
@@ -54,15 +55,24 @@
         <div><div class="label">Depot (free text)</div><input class="input" id="depotText" placeholder="12 Patcham Terrace, SW8"></div>
         <div><div class="label">Customer (free text)</div><input class="input" id="custText" placeholder="21 Soho Square, W1D 3QP"></div>
       </div>
-      <div id="err" style="margin-top:.5rem;color:#b91c1c"></div>
-      <div style="margin-top:.75rem; display:flex; gap:.5rem; flex-wrap:wrap">
-        <button class="btn primary" id="analyse">Analyse Address</button>
+      <div class="row" style="margin-top:.5rem">
+        <div>
+          <div class="label">Plan date/time</div>
+          <input class="input" id="when" type="datetime-local">
+        </div>
+        <div style="align-self:end">
+          <button class="btn primary" id="analyse">Analyse Address</button>
+        </div>
+        <div id="err" style="align-self:end;color:#b91c1c"></div>
+      </div>
+      <div class="row" style="margin-top:.5rem">
         <button class="btn" data-ai="duration">Duration</button>
         <button class="btn" data-ai="crew">Crew & Vehicle</button>
         <button class="btn" data-ai="quote">Draft Quote</button>
         <button class="btn" data-ai="risk">Risk</button>
         <button class="btn" data-ai="message">Message</button>
         <button class="btn" data-ai="analyse">Autopilot</button>
+        <button class="btn" id="calendar">Add to Calendar</button>
       </div>
       <div id="mode" class="chip" style="margin-top:.5rem"></div>
     </div>
@@ -77,17 +87,23 @@
     </div>
 
     <div class="card">
+      <h3>Incidents & Roadworks (near destination)</h3>
+      <div id="incidents">—</div>
+    </div>
+
+    <div class="card">
+      <h3>Parking · Building · Safety</h3>
+      <div id="pbs">—</div>
+    </div>
+
+    <div class="card">
       <div id="imgs">Run an analysis to see property images.</div>
     </div>
 
     <div class="card">
-      <h3>Pricing & Competitor Watch</h3>
+      <h3>Pricing & Competitor / Lead & Marketing</h3>
       <div id="pricing">—</div>
       <div id="competitor">—</div>
-    </div>
-
-    <div class="card">
-      <h3>Lead Score & Marketing</h3>
       <div id="lead">—</div>
       <div id="marketing">—</div>
     </div>
@@ -103,31 +119,34 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-let map, Lmod, originMarker, destMarker, line, heat, chor, state={};
+let map, Lmod, originMarker, destMarker, line, heat, chor, incLayer, state = {};
 
 async function j(url, opts){ const r = await fetch(url, Object.assign({ headers:{'Content-Type':'application/json'} }, opts||{})); return r.json(); }
 function htmlEscape(s){ return (s+'').replace(/[&<>"]/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c])) }
 
 (async()=>{
-  const env = await j('/api/env-status'); document.getElementById('env').textContent = `OpenAI: ${env.openai?'✔':'—'} · Google: ${env.google?'✔':'—'}`;
+  const env = await j('/api/env-status'); document.getElementById('env').textContent = `OpenAI ${env.openai?'✔':'—'} · Google ${env.google?'✔':'—'} · Incidents ${env.tomtom||env.tfl?'✔':'—'}`;
   const s = await j('/api/sample_addresses');
   const areas = await j('/api/areas');
   const depSel = document.getElementById('depot'); const cusSel = document.getElementById('customer');
   s.depots.forEach(d=>{ const o=document.createElement('option'); o.value=d.id; o.textContent=d.label; depSel.appendChild(o); });
   s.customers.forEach(c=>{ const o=document.createElement('option'); o.value=c.id; o.textContent=c.label; cusSel.appendChild(o); });
 
-  Lmod = L; map = Lmap();
-  await drawLayers(areas);
+  Lmod = L; map = L.map('map').setView([51.509,-0.118], 12);
+  Lmod.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution:'&copy; OpenStreetMap' }).addTo(map);
+
+  await drawBaseLayers(areas);
 
   document.getElementById('layer-heat').addEventListener('change', toggleLayers);
   document.getElementById('layer-chor').addEventListener('change', toggleLayers);
+  document.getElementById('layer-inc').addEventListener('change', toggleLayers);
 })();
 
-async function drawLayers(areas){
+async function drawBaseLayers(areas){
   const heatData = await j('/api/heatmap');
   const chorData = await j('/api/geo/postcodes');
 
-  if(heat){ heat.remove(); } if(chor){ chor.remove(); }
+  if(heat) heat.remove(); if(chor) chor.remove();
 
   heat = L.layerGroup();
   heatData.features.forEach(f=>{
@@ -157,14 +176,10 @@ async function drawLayers(areas){
 function toggleLayers(){
   const h = document.getElementById('layer-heat').checked;
   const c = document.getElementById('layer-chor').checked;
+  const i = document.getElementById('layer-inc').checked;
   if(heat){ if(h) heat.addTo(map); else heat.remove(); }
   if(chor){ if(c) chor.addTo(map); else chor.remove(); }
-}
-
-function Lmap(){
-  const m = Lmod.map('map').setView([51.509,-0.118], 12);
-  Lmod.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution:'&copy; OpenStreetMap' }).addTo(m);
-  return m;
+  if(incLayer){ if(i) incLayer.addTo(map); else incLayer.remove(); }
 }
 
 document.getElementById('analyse').onclick = async () => {
@@ -172,8 +187,10 @@ document.getElementById('analyse').onclick = async () => {
   const customer = document.getElementById('customer').value;
   const depotText = document.getElementById('depotText').value.trim();
   const custText = document.getElementById('custText').value.trim();
+  const when = document.getElementById('when').value; // datetime-local
   const live = depotText && custText;
   const payload = live ? { depot_address_text: depotText, customer_address_text: custText } : { depot_id: depot, customer_address_id: customer };
+
   const intake = await j('/api/intake', { method:'POST', body: JSON.stringify(payload) });
   if(intake.error){ document.getElementById('err').textContent = 'Intake failed: '+(intake.hint||intake.error); return }
   document.getElementById('err').textContent='';
@@ -186,15 +203,30 @@ document.getElementById('analyse').onclick = async () => {
 
   const pimg = await j((intake.mode!=='mock_ids')? `/api/property-image?lat=${intake.dest.lat}&lng=${intake.dest.lng}` : `/api/property-image?address_id=${customer}`);
   const addrId = (intake.mode!=='mock_ids') ? 'cust_1' : customer;
-  const parking = await j(`/api/parking?address_id=${addrId}`);
+  const parking = await j(`/api/parking?address_id=${addrId}&when=${encodeURIComponent(when)}`);
   const building = await j(`/api/building?address_id=${addrId}`);
   const safety = await j(`/api/safety?address_id=${addrId}`);
   const weather = await j(`/api/weather?lat=${intake.dest.lat}&lng=${intake.dest.lng}`);
   const route = await j((intake.mode!=='mock_ids')
-    ? `/api/route?origin_lat=${intake.origin.lat}&origin_lng=${intake.origin.lng}&dest_lat=${intake.dest.lat}&dest_lng=${intake.dest.lng}`
-    : `/api/route?origin_id=${payload.depot_id}&dest_id=${payload.customer_address_id}`);
+    ? `/api/route?origin_lat=${intake.origin.lat}&origin_lng=${intake.origin.lng}&dest_lat=${intake.dest.lat}&dest_lng=${intake.dest.lng}&when=${encodeURIComponent(when)}`
+    : `/api/route?origin_id=${payload.depot_id}&dest_id=${payload.customer_address_id}&when=${encodeURIComponent(when)}`);
 
-  state = { intake, pimg, parking, building, safety, weather, route };
+  // Incidents near destination
+  const incidents = await j(`/api/incidents?lat=${intake.dest.lat}&lng=${intake.dest.lng}&radius_km=5`);
+  if(incLayer) incLayer.remove();
+  incLayer = L.layerGroup();
+  (incidents.items || []).forEach((it) => {
+    if (it.polyline) {
+      // basic polyline decode for TomTom omitted; show point fallback
+    }
+    const m = Lmod.circleMarker([intake.dest.lat + (Math.random()-0.5)*0.01, intake.dest.lng + (Math.random()-0.5)*0.02],
+      { radius:5, color:'#ef4444', fillColor:'#ef4444', fillOpacity:.7, weight:1 });
+    m.bindPopup(`${htmlEscape(it.category||it.type||'Incident')} — ${htmlEscape(it.severity||it.road||'')}`);
+    incLayer.addLayer(m);
+  });
+  if(document.getElementById('layer-inc').checked) incLayer.addTo(map);
+
+  state = { when, intake, pimg, parking, building, safety, weather, route, incidents };
 
   // KPIs
   const areaCode = (intake.dest.label.match(/\b([A-Z]{1,2}\d{1,2})\b/)||[])[1] || 'SW11';
@@ -204,12 +236,28 @@ document.getElementById('analyse').onclick = async () => {
   document.getElementById('kpi-dist').textContent = route?.distance_km ?? '—';
   document.getElementById('kpi-weather').textContent = `${weather?.condition||'—'} ${weather?.temp_c!=null?('• '+weather.temp_c+'°C'):''}`;
 
+  // PBS panel
+  document.getElementById('pbs').innerHTML =
+    `<div class="row">
+       <span class="pill">CPZ: ${htmlEscape(parking.cpz||'—')}</span>
+       <span class="pill">Bay: ${(parking.bay_types||[]).join(', ')||'—'}</span>
+       <span class="pill">${parking.waiver_required?'Waiver required':'Waiver not required'}</span>
+     </div>
+     <div style="margin-top:.25rem">Restrictions: ${(parking.restrictions||[]).map(r=>'<span class="pill">'+htmlEscape(r)+'</span>').join(' ')||'—'}</div>
+     <div style="margin-top:.5rem">Building: ${htmlEscape((building.building_type||'')+' • floors '+(building.floors??'—')+' • lift '+(building.lift?'Yes':'No'))}</div>
+     <div>Safety: ${htmlEscape((safety.width_restriction?'Width '+safety.width_restriction+' • ':'')+(safety.one_way?'One-way • ':'')+'Crime '+(safety.crime_risk||'—'))}</div>`;
+
   // Images
   const imgs = document.getElementById('imgs');
   imgs.innerHTML = `<div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
     <img alt="Street" src="${htmlEscape(pimg.image_url||'')}" style="width:100%;border:1px solid #e5e7eb;border-radius:.5rem"/>
     <img alt="Sat" src="${htmlEscape(pimg.satellite_url||'')}" style="width:100%;border:1px solid #e5e7eb;border-radius:.5rem"/>
   </div>`;
+
+  // Incidents panel text
+  document.getElementById('incidents').innerHTML = incidents.count
+    ? `${incidents.count} nearby (source: ${incidents.source})`
+    : 'No incidents reported';
 
   document.getElementById('json').textContent = JSON.stringify(state, null, 2);
 };
@@ -219,35 +267,47 @@ document.querySelectorAll('[data-ai]').forEach(btn => {
     const path = btn.getAttribute('data-ai');
     const r = await j(`/api/ai/${path}`, { method:'POST', body: JSON.stringify({ context: state }) });
     state[path] = r;
-    // Paint panels if "analyse"
+
     if(path==='analyse'){
       const p = r?.pricing;
       const cw = r?.competitor_watch;
       const ls = r?.lead_score;
       const mk = r?.marketing;
-
       document.getElementById('pricing').innerHTML = p
         ? `<div class="pill">Current: £${p.current_rate}</div>
            <div class="pill">Competitor avg: £${p.competitor_avg_rate}</div>
-           <div class="pill">Recommended: £${p.recommended_rate} (${p.change_pct}%)
-           </div><div style="margin-top:.5rem">${htmlEscape(p.rationale||'')}</div>`
+           <div class="pill">Recommended: £${p.recommended_rate} (${p.change_pct}%)</div>
+           <div style="margin-top:.5rem">${htmlEscape(p.rationale||'')}</div>`
         : '—';
-
-      document.getElementById('competitor').innerHTML = Array.isArray(cw) ?
-        `<ul>${cw.map(x=>`<li>• ${htmlEscape(x.name||'Competitor')} — strength: ${htmlEscape(x.strength||'?')} — risk: ${htmlEscape(x.risk||'?')}</li>`).join('')}</ul>`
+      document.getElementById('competitor').innerHTML = Array.isArray(cw)
+        ? `<ul>${cw.map(x=>`<li>• ${htmlEscape(x.name||'Competitor')} — ${htmlEscape(x.strength||'?')} — risk: ${htmlEscape(x.risk||'?')}</li>`).join('')}</ul>`
         : '—';
-
-      document.getElementById('lead').innerHTML = ls
-        ? `Lead score: <b>${htmlEscape(ls.score||'?')}</b>${ls.tier?` (${htmlEscape(ls.tier)})`:''}`
-        : '—';
-
+      document.getElementById('lead').innerHTML = ls ? `Lead score: <b>${htmlEscape(ls.score||'?')}</b>${ls.tier?` (${htmlEscape(ls.tier)})`:''}` : '—';
       document.getElementById('marketing').innerHTML = mk
-        ? `Channels: ${(mk.channels||[]).map(c=>`<span class="pill">${htmlEscape(c)}</span>`).join(' ')}${mk.budget_hint_gbp?`<div style="margin-top:.25rem">Budget hint: £${mk.budget_hint_gbp}</div>`:''}`
+        ? `Channels: ${(mk.channels||[]).map(c=>`<span class="pill">${htmlEscape(c)}</span>`).join(' ')}${mk.budget_hint_gbp?`<div>Budget hint: £${mk.budget_hint_gbp}</div>`:''}`
         : '—';
     }
     document.getElementById('json').textContent = JSON.stringify(state, null, 2);
-  })
+  });
 });
+
+// Calendar export
+document.getElementById('calendar').onclick = async () => {
+  const when = document.getElementById('when').value || new Date().toISOString();
+  const title = 'Move Job: ' + (state?.intake?.dest?.label || 'Destination');
+  const location = state?.intake?.dest?.label || '';
+  const notes = `ETA ~ ${state?.route?.eta_minutes || '?'} min • Distance ${state?.route?.distance_km || '?'} km`;
+  const r = await fetch('/api/calendar', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ title, start_iso: when, duration_minutes: 120, location, notes })
+  });
+  const blob = await r.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'move-job.ics'; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 3000);
+};
 </script>
 </body>
 </html>
