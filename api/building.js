@@ -1,1 +1,0 @@
-export default async function handler(req,res){ const id=req.query.address_id||''; const meta={cust_1:{floors:3,lift:false,door_width_cm:85,stair_width_cm:90,rear_access:false},cust_2:{floors:4,lift:false,door_width_cm:80,stair_width_cm:85,rear_access:false},cust_3:{floors:50,lift:true,door_width_cm:90,stair_width_cm:110,rear_access:true}}; res.json(meta[id]||{}) }

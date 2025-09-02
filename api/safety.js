@@ -1,1 +1,0 @@
-export default async function handler(req,res){ const id=req.query.address_id||''; const hazards={cust_1:{width_restriction:'2.0m',one_way:true,crime_risk:'Medium'},cust_2:{one_way:false,crime_risk:'Low'},cust_3:{width_restriction:'2.4m',one_way:true,crime_risk:'Low'}}; res.json(hazards[id]||{}) }
