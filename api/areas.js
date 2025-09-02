@@ -1,0 +1,1 @@
+import { SAMPLE } from '../lib/sample.js'; export default async function handler(req,res){ res.json({ areas: SAMPLE.areas }) }

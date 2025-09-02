@@ -1,0 +1,107 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "code": "SW11",
+        "name": "Battersea"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -0.17,
+              51.45
+            ],
+            [
+              -0.13,
+              51.45
+            ],
+            [
+              -0.13,
+              51.48
+            ],
+            [
+              -0.17,
+              51.48
+            ],
+            [
+              -0.17,
+              51.45
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code": "NW1",
+        "name": "Marylebone"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -0.18,
+              51.515
+            ],
+            [
+              -0.13,
+              51.515
+            ],
+            [
+              -0.13,
+              51.535
+            ],
+            [
+              -0.18,
+              51.535
+            ],
+            [
+              -0.18,
+              51.515
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code": "E14",
+        "name": "Canary Wharf"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -0.05,
+              51.49
+            ],
+            [
+              -0.0,
+              51.49
+            ],
+            [
+              -0.0,
+              51.515
+            ],
+            [
+              -0.05,
+              51.515
+            ],
+            [
+              -0.05,
+              51.49
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

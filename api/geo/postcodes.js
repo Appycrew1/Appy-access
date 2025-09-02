@@ -1,0 +1,1 @@
+import fs from 'node:fs'; import path from 'node:path'; export default async function handler(req,res){ const p=path.join(process.cwd(),'lib','postcodes.geo.json'); const j=fs.readFileSync(p,'utf8'); res.setHeader('content-type','application/json'); res.send(j) }
